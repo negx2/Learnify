@@ -4,8 +4,7 @@ import FetchQuiz from "./FetchQuiz";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Transcript from "./Transcript";
 
-//  test commit
-
+//  test commit stOth
 const questions = [
   {
     question_text:
