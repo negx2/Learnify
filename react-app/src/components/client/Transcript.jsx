@@ -45,18 +45,36 @@ const Transcript = () => {
   };
 
   return (
-    <div>
-      <input type="text" value={transcript} onChange={handleInputChange} />
-      <button onClick={handleButtonClick}>Send</button>
+    <div className="mainClass">
+      {/* <input type="text" value={transcript} onChange={handleInputChange} /> */}
 
-      {quiz ? (
-        <div>
-          {" "}
-          <QuizPlayer questions={quiz.questions} />{" "}
+      <div className="inputSide">
+        <textarea
+          rows="10"
+          cols="30"
+          onChange={handleInputChange}
+          // CONSIDER below onChnage func.... as it needs an event
+          // onChange={(e) => {
+          //   setTranscript(e.target.value);
+          // }}
+          placeholder="Script ..."
+        ></textarea>
+
+        <div className="btnsDiv">
+          <button className="generateBTN" onClick={handleButtonClick}>
+            Generate Quiz
+          </button>
         </div>
-      ) : (
-        <div>{fetchStatus}</div>
-      )}
+      </div>
+
+      <hr />
+      <div className="outputSide">
+        {quiz ? (
+          <QuizPlayer questions={quiz.questions} />
+        ) : (
+          <div>{fetchStatus}</div>
+        )}
+      </div>
     </div>
   );
 };

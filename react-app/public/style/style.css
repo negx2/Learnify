@@ -79,6 +79,15 @@ hr {
   cursor: pointer;
 }
 
+.navBTNs {
+  /* display: flex; */
+  /* flex-direction: column; */
+  margin-right: 10px;
+  border-radius: 10px;
+  padding: 5px 5px;
+  background-color: rgb(185, 235, 185);
+  cursor: pointer;
+}
 
 .generateBTN{
   /* flex: 1; */
@@ -89,6 +98,8 @@ hr {
   background-color: rgb(185, 235, 185);
   cursor: pointer;
 }
+
+
 table {
   border-spacing: 13px 0;
 }
@@ -111,15 +122,7 @@ input {
     margin: 0.4rem;
 }
 
-.submitBTN{
-  /* flex: 1; */
-  margin-right: 30px;
-  margin-left: 25%;
-  border-radius: 10px;
-  padding: 5px 5px;
-  background-color: rgb(185, 235, 185);
-  cursor: pointer;
-}
+
 
 /*
 Originally were in App.css

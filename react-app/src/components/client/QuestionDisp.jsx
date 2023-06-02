@@ -1,19 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 
 const QuestionDisp = ({ question, handleAnswerOptionClick }) => {
+  const tempAns = [];
+  const [selectedAnswers, setSelectedAnswers] = useState({});
   return (
-    <div>
-      <h2>{question.question_text}</h2>
-      <div>
-        {question.choices.map((choice, index) => (
+    <div className="qna">
+      <form action="">
+        <p>{question.question_text}</p>
+        <br></br>
+        <div>
+          {question.choices.map((choice, index) => (
+            <div key={index}>
+              <input
+                type="checkbox"
+                onClick={(e) => {
+                  if (e.target.checked) {
+                    // add it to selected answers
+                    tempAns.push(e.target.value);
+                  } else {
+                    // pop out
+                  }
+                  console.log(
+                    "input:",
+                    e.target.value,
+                    e.target.checked,
+                    tempAns
+                  );
+                }}
+                id={choice.choice_text}
+                value={choice.choice_text}
+              />
+              <label>{choice.choice_text}</label>
+            </div>
+          ))}
+        </div>
+        <br></br>
+        <div>
           <button
-            key={index}
-            onClick={() => handleAnswerOptionClick(choice.is_correct)}
+            className="submitBTN"
+            type="submit"
+            onClick={(e) => {
+              e.preventDefault();
+              // validate users asnwers
+              // console.log("input:", e);
+              // handleAnswerOptionClick(answerOption.isCorrect);
+            }}
           >
-            {choice.choice_text}
+            Submit
           </button>
-        ))}
-      </div>
+        </div>
+      </form>
     </div>
   );
 };

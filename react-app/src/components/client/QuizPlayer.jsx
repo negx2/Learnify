@@ -21,7 +21,7 @@ const QuizPlayer = ({ questions }) => {
 
   const renderResults = () => {
     return (
-      <div>
+      <div className="score-section">
         <p>
           You scored {score} out of {questions.length} questions.
         </p>
@@ -39,7 +39,9 @@ const QuizPlayer = ({ questions }) => {
     );
   };
 
-  return <div>{showResults ? renderResults() : renderQuiz()}</div>;
+  return (
+    <div className="app">{showResults ? renderResults() : renderQuiz()}</div>
+  );
 };
 
 export default QuizPlayer;
