@@ -1,0 +1,189 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  /* credit to upload.wikimedia.org for supplying the very cool digital rain animation*/
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/a/a0/Digital_rain_animation_small_letters_shine.gif");
+  background-size: 100%;
+  font-family: 'Courier New', monospace;
+}
+
+textarea {
+  padding: 5px;
+}
+
+h2 {
+  color:black;
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+h2:before {
+  content: attr(data-before);
+  word-break: break-all;
+  opacity: 0.5;
+}
+h2:after {
+  content: attr(data-after);
+  word-break: break-all;
+  opacity: 0.5;
+}
+
+.topMostDiv {
+  background-color: rgb(238, 243, 240);
+  margin-left: 10%;
+  margin-right: 10%;
+}
+#root {
+  height: 100vh;
+  padding-bottom: 3%;
+}
+
+.mainClass {
+  display: flex;
+  margin-left: 10%;
+  margin-right: 5%;
+}
+
+.inputSide {
+  flex: 1;
+  padding-right: 10%;
+}
+
+.outputSide {
+  flex: 1;
+  padding-left: 10%;
+}
+
+hr {
+  min-height: 100%;
+  max-height: 100vh;
+  margin: 0;
+}
+
+.btnsDiv{
+  display: flex;
+  padding-top: 7px;
+}
+
+.answerBTNs{
+  flex: 1;
+  margin-right: 10px;
+  margin-left: 30px;
+  border-radius: 10px;
+  padding: 5px 5px;
+  background-color: rgb(185, 235, 185);
+  cursor: pointer;
+}
+
+.navBTNs {
+  /* display: flex; */
+  /* flex-direction: column; */
+  margin-right: 10px;
+  border-radius: 10px;
+  padding: 5px 5px;
+  background-color: rgb(185, 235, 185);
+  cursor: pointer;
+}
+
+.generateBTN{
+  /* flex: 1; */
+  margin-right: 30px;
+  margin-left: 25%;
+  border-radius: 10px;
+  padding: 5px 5px;
+  background-color: rgb(185, 235, 185);
+  cursor: pointer;
+}
+
+
+table {
+  border-spacing: 13px 0;
+}
+
+th, td {
+  padding: 1px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {background-color: rgb(185, 235, 185);}
+
+
+p,
+label {
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input {
+    margin: 0.4rem;
+}
+
+
+
+/*
+Originally were in App.css
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+*/
+
+/*
+Originally were in index.css
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+*/
