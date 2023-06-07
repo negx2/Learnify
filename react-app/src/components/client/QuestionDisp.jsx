@@ -72,7 +72,7 @@ const QuestionDisp = ({
                 value={choice.choice_text}
                 onClick={userAnswSelectionHandler}
               />
-              <label>{choice.choice_text}</label>
+              <label htmlFor={choice.choice_text}>{choice.choice_text}</label>
             </div>
           ))}
         </div>
