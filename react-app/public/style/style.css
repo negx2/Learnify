@@ -99,6 +99,15 @@ hr {
   cursor: pointer;
 }
 
+.submitBTN{
+  /* flex: 1; */
+  margin-right: 30px;
+  margin-left: 25%;
+  border-radius: 10px;
+  padding: 5px 5px;
+  background-color: rgb(185, 235, 185);
+  cursor: pointer;
+}
 
 table {
   border-spacing: 13px 0;
@@ -118,72 +127,50 @@ label {
     font: 1rem 'Fira Sans', sans-serif;
 }
 
-input {
-    margin: 0.4rem;
+/* input[type="checkbox"] {
+  display: none;
+} */
+
+input[type="checkbox"]:checked + label {
+  color: rgb(35, 160, 35);
+  font-style: italic;
+  font-weight: bold;
+}
+
+label {
+  display: inline-block;
+  padding: 0.5em 0.5em;
+  border-radius: 5px;
+}
+
+
+span {
+  display: inline-block;
 }
 
 
 
-/*
-Originally were in App.css
-
-.App {
-  text-align: center;
+@keyframes shake {
+  0% { transform: translateX(0) }
+  25% { transform: translateX(5px) }
+  50% { transform: translateX(-5px) }
+  75% { transform: translateX(5px) }
+  100% { transform: translateX(0) }
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@keyframes shake2 {
+  0% { transform: translateX(0) }
+  25% { transform: translateX(5px) }
+  50% { transform: translateX(-5px) }
+  75% { transform: translateX(5px) }
+  100% { transform: translateX(0) }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+span.shake {
+  animation: shake 0.35s;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+span.shake2 {
+  animation: shake2 0.35s;
+
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
-*/
-
-/*
-Originally were in index.css
-
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-*/
