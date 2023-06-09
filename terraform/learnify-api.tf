@@ -30,6 +30,49 @@ resource "aws_iam_role" "cloudwatch" {
 EOF
 }
 
+resource "aws_iam_role" "api_gateway_dynamodb_read_role" {
+  name = "api_gateway_dynamodb_read_role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "apigateway.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_policy" "api_gateway_dynamodb_read_policy" {
+  name = "api_gateway_dynamodb_read_policy"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["dynamodb:GetItem", "dynamodb:Scan"],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "api_gateway_dynamodb_read_role_policy_attachment" {
+  role       = aws_iam_role.api_gateway_dynamodb_read_role.name
+  policy_arn = aws_iam_policy.api_gateway_dynamodb_read_policy.arn
+}
+
+
+
 resource "aws_iam_role_policy" "cloudwatch" {
   name = "default"
   role = aws_iam_role.cloudwatch.id
