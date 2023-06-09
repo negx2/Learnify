@@ -5,6 +5,7 @@ import { questions } from "../HelperFuncs/sampleQnA.js";
 import QuizPlayer from "./QuizPlayer.jsx";
 import FetchQuiz from "./FetchQuiz.jsx";
 import { useNavigate } from "react-router-dom";
+import FetchFeatured from "./FetchFeatured.jsx";
 
 const App = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/" element={<QuizPlayer questions={questions} />} />
         <Route path="/tx" element={<Transcript />} />
         <Route path="/fetch" element={<FetchQuiz />} />
+        <Route path="/featured" element={<FetchFeatured />} />
       </Routes>
     </>
   );
