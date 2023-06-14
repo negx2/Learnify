@@ -144,11 +144,9 @@ label {
 }
 
 
-span {
+.BTNdiv {
   display: inline-block;
 }
-
-
 
 @keyframes shake {
   0% { transform: translateX(0) }
@@ -166,11 +164,12 @@ span {
   100% { transform: translateX(0) }
 }
 
-span.shake {
+
+.BTNdiv.shake {
   animation: shake 0.35s;
 }
 
-span.shake2 {
-  animation: shake2 0.35s;
 
+.BTNdiv.shake2 {
+  animation: shake2 0.35s;
 }

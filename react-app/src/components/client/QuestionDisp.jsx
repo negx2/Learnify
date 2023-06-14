@@ -77,19 +77,26 @@ const QuestionDisp = ({
           ))}
         </div>
         <br></br>
-        <div>
-          <button
-            className="submitBTN"
-            type="submit"
-            onClick={nextQuestionBTNhandler}
-          >
-            {qNumber + 1 === totalQuestions ? "Submit" : "Next"}
-          </button>
+        <div className="BTNdiv shake">
+          {answerIsCorr === "yes" ? (
+            <button
+              className="submitBTN"
+              type="submit"
+              onClick={nextQuestionBTNhandler}
+            >
+              Attempt
+            </button>
+          ) : (
+            <button
+              className="submitBTN"
+              type="submit"
+              onClick={nextQuestionBTNhandler}
+            >
+              Try Again!
+            </button>
+          )}
         </div>
       </form>
-      {answerIsCorr === "yes" ? null : (
-        <span className="shake">Try Again!!</span>
-      )}
     </div>
   );
 };
