@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import $ from "jquery";
+import ProgressBar from "@ramonak/react-progress-bar";
 
 const QuestionDisp = ({
   question,
@@ -57,9 +58,18 @@ const QuestionDisp = ({
   return (
     <div className="qna">
       <form action="">
-        <p>
+        {/* <p>
           Questions: {qNumber + 1}/{totalQuestions}
-        </p>
+        </p> */}
+        <div>
+          <ProgressBar
+            completed={Math.round((qNumber / totalQuestions) * 100)}
+            bgColor={"rgb(53, 204, 53)"}
+            height="10px"
+            labelSize="10px"
+            width="50%"
+          />
+        </div>
         <br></br>
         <p>{question.question_text}</p>
         <br></br>

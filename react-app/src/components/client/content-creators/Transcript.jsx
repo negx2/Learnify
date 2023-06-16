@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AWS from "aws-sdk";
-import QuizPlayer from "./QuizPlayer.jsx";
-import { questions } from "../HelperFuncs/sampleQnA.js";
+import CC_QuizPlayer from "./CC_QuizPlayer.jsx";
+import { questions } from "./../../HelperFuncs/sampleQnA.js";
 
 const lambda = new AWS.Lambda({
   region: "us-east-2",
@@ -48,8 +48,6 @@ const Transcript = () => {
 
   return (
     <div className="mainClass">
-      {/* <input type="text" value={transcript} onChange={handleInputChange} /> */}
-
       <div className="inputSide">
         <textarea
           rows="10"
@@ -59,7 +57,7 @@ const Transcript = () => {
           // onChange={(e) => {
           //   setTranscript(e.target.value);
           // }}
-          placeholder="Script ..."
+          placeholder="Paste your content script here..."
         ></textarea>
 
         <div className="btnsDiv">
@@ -73,7 +71,7 @@ const Transcript = () => {
       <div className="outputSide">
         {quiz ? (
           // <QuizPlayer questions={quiz.questions} />
-          <QuizPlayer questions={questions} />
+          <CC_QuizPlayer questions={questions} />
         ) : (
           <div>{fetchStatus}</div>
         )}
