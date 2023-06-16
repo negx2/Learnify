@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Transcript from "./content-creators/Transcript.jsx";
+import Transcript from "./QuizEdit/Transcript.jsx";
 import { useNavigate } from "react-router-dom";
 import FetchFeatured from "./FetchFeatured.jsx";
 

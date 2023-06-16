@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import $ from "jquery";
 import ProgressBar from "@ramonak/react-progress-bar";
 
-const CC_QuestionDisp = ({ question }) => {
+const QuestionDispEdit = ({ question }) => {
   const originalQ = Object.assign({}, question);
   const editableQ = Object.assign({}, question);
 
@@ -37,7 +37,7 @@ const CC_QuestionDisp = ({ question }) => {
   };
 
   useEffect(() => {
-    // setCreatorQ(question);
+    // setCreatorQ(question);sd
   }, [ansUpdated]);
 
   return (
@@ -87,4 +87,4 @@ const CC_QuestionDisp = ({ question }) => {
   );
 };
 
-export default CC_QuestionDisp;
+export default QuestionDispEdit;
