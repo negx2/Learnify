@@ -130,7 +130,7 @@ def test_lambda_handler_500(mocked_openai, caplog):
     assert response[
         'statusCode'] == expected_error_code, f"Expected status code: {expected_error_code}, Actual status code: {response['statusCode']}"
     assert expected_error_message in response[
-        'body'], f"Expected body: {expected_error_message}, Actual body: {response['body']}"
+        'body']['error_message'], f"Expected error message: {expected_error_message}, Actual body: {response['body']}"
 
     mocked_openai.assert_called_once(
     ), f"Expected mocked_openai to be called once, Actual mocked_openai called: {mocked_openai.call_count}"
