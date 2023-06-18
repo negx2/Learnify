@@ -1,17 +1,19 @@
 import os
 import openai
 import boto3
-from format_validator import validate_quiz_json
+from format_validator import validate_quiz_string
+import logging
 
+logger = logging.getLogger(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
-def generate_quiz(transcript, logger):
+def generate_quiz(transcript):
     next_quiz_id = getMaxId() + 1
     quiz = fetchQuiz(transcript)
 
     try:
-        quiz_json = validate_quiz_json(quiz)
+        quiz_json = validate_quiz_string(quiz)
         quiz_json['quiz_id'] = next_quiz_id
     except Exception as e:
         logger.error(

@@ -92,7 +92,7 @@ def test_lambda_handler_200(mocked_openai):
     assert response[
         'statusCode'] == 200, f"Expected status code: 200, Actual status code: {response['statusCode']}"
     assert response[
-        'body'] == sample_transcripts.sampleQuizText(), f"Expected body: {sample_transcripts.sampleQuizText()}, Actual body: {response['body']}"
+        'body']['quiz'] == sample_transcripts.sampleQuizText(), f"Expected body to contain quiz: {sample_transcripts.sampleQuizText()}, Actual body: {response['body']}"
 
     mocked_openai.assert_called_once(
     ), f"Expected mocked_openai to be called once, Actual mocked_openai called: {mocked_openai.call_count}"
