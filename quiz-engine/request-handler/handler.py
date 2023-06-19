@@ -47,13 +47,14 @@ def lambda_handler(event, context):
         except Exception as e:
             error_message = "Error: 500 - Internal Server Error: Failed to create a valid quiz. Please try again with a different transcript."
             return create_error_response(STATUS_INTERNAL_SERVER_ERROR, error_message)
-    elif 'updated_quiz' in event:
+    elif 'update_quiz' in event:
         try:
-            updated = updater.update_quiz(event['updated_quiz'])
+            updated = updater.update_quiz(event['update_quiz'])
             return create_done_response(STATUS_OK, updated)
         except InputError as e:
             return create_error_response(STATUS_BAD_REQUEST, str(e))
         except Exception as e:
+            logger.error(e)
             error_message = "Error: 500 - Internal Server Error: Failed to update quiz: "
             return create_error_response(STATUS_INTERNAL_SERVER_ERROR, error_message)
     else:

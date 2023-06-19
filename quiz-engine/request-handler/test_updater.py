@@ -1,7 +1,7 @@
 import unittest
 import unittest.mock as mock
 import updater
-import copy
+from utils import QuizUpdater
 
 sample_quiz = {
     "quiz_id": 17,
@@ -29,41 +29,6 @@ sample_quiz = {
 }
 
 
-class QuizUpdater:
-
-    def __init__(self, quiz):
-        self.quiz = copy.deepcopy(quiz)
-
-    def get_quiz(self):
-        return self.quiz
-
-    def update_quiz_title(self, new_title):
-        self.quiz['quiz_title'] = new_title
-        return self
-
-    def update_question_text(self, question_number, new_text):
-        self.quiz['questions'][question_number - 1]['question_text'] = new_text
-        return self
-
-    def update_choice(self, question_number, choice_number, new_text, is_correct):
-        self.quiz['questions'][question_number -
-                               1]['choices'][choice_number - 1]['choice_text'] = new_text
-        self.quiz['questions'][question_number -
-                               1]['choices'][choice_number - 1]['is_correct'] = is_correct
-        return self
-
-    def remove_question(self, question_number):
-        self.quiz['questions'].pop(question_number - 1)
-        return self
-
-    def update_quiz_id(self, new_id):
-        self.quiz['quiz_id'] = new_id
-        return self
-
-    def test_update_quiz(self):
-        pass
-
-
 class TestQuizUpdater(unittest.TestCase):
 
     @mock.patch('updater.fetchQuiz', return_value=sample_quiz)
@@ -79,7 +44,7 @@ class TestQuizUpdater(unittest.TestCase):
         assert updated_quiz != sample_quiz
         assert updater.update_quiz(updated_quiz) == True
         mocked_save.assert_called_once_with(updated_quiz)
-        mocked_fetch.assert_called_once_with(updated_quiz['quiz_id'], mock.ANY)
+        mocked_fetch.assert_called_once_with(updated_quiz['quiz_id'])
 
     @mock.patch('updater.fetchQuiz', side_effect=Exception("Quiz not found"))
     @mock.patch('updater.saveQuiz', return_value=True)

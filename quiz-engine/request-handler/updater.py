@@ -14,15 +14,13 @@ def fetchQuiz(quiz_id):
         response = table.get_item(
             Key={'quiz_id': quiz_id}
         )
-        quiz = response.get('Item')
+        quiz = response['Item']
         return quiz
     except KeyError as e:
-        raise InputError(f"Quiz id not found: quiz_id={quiz_id}") from e
+        raise InputError(f"Quiz id not found: quiz_id={quiz_id}")
     except Exception as e:
-        logger.error(
-            f"Failed to fetch quiz for input quiz_id: {quiz_id} \nException: {e}")
         raise Exception(
-            f"Failed to fetch quiz for quiz_id: {quiz_id}")
+            f"Failed to fetch quiz for quiz_id: {quiz_id}") from e
 
 
 def saveQuiz(quiz):
@@ -34,7 +32,9 @@ def saveQuiz(quiz):
 def update_quiz(new_quiz):
     validate_quiz_json(new_quiz)
 
-    fetched_quiz = fetchQuiz(new_quiz['quiz_id'], logger)
+    fetched_quiz = fetchQuiz(new_quiz['quiz_id'])
+
+    logger.error(f"fetched_quiz: {fetched_quiz}")
 
     try:
         validate_quiz_json(fetched_quiz)
