@@ -1,10 +1,6 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      docker: 19
-
   pre_build:
     commands:
       - export IMAGE_REPO_NAME=public.ecr.aws/o7c7i3x2/learnify-ecr-repo/ft5-large-qas-50
