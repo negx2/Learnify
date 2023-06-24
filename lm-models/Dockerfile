@@ -5,7 +5,7 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy the requirements.txt file and install dependencies
-COPY ../server/requirements.txt .
+COPY ./server/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Copy the model from S3 to /app/model in the container
@@ -13,7 +13,7 @@ RUN apt-get install -y awscli
 RUN aws s3 cp s3://learnify-models-bucket/ft5_large_qas_50 /app/model_dir
 
 # Copy the server.py file into the container
-COPY ../server/model_server.py /app/model_server.py
+COPY ./server/model_server.py /app/model_server.py
 
 # Expose the port on which the FastAPI server will run
 EXPOSE 8000
