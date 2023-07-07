@@ -9,7 +9,7 @@ const QuestionDisp = ({
   totalQuestions,
 }) => {
   const [userAnswers, setUserAnswers] = useState([]);
-  const [answerIsCorr, setAnswerIsCorr] = useState("yes");
+  const [answerIsCorr, setAnswerIsCorr] = useState(true);
 
   const validateAnswers = (a, b) => {
     if (a === b) return true;
@@ -32,11 +32,11 @@ const QuestionDisp = ({
 
     if (validateAnswers(correctAns, userAnswers)) {
       handleAnswerOptionClick(true);
-      setAnswerIsCorr("yes");
+      setAnswerIsCorr(true);
       setUserAnswers([]);
       $("input[type=checkbox]").prop("checked", false);
     } else {
-      setAnswerIsCorr("no");
+      setAnswerIsCorr(false);
       $(".shake").toggleClass("shake2");
     }
   };
@@ -88,23 +88,13 @@ const QuestionDisp = ({
         </div>
         <br></br>
         <div className="BTNdiv shake">
-          {answerIsCorr === "yes" ? (
-            <button
-              className="submitBTN"
-              type="submit"
-              onClick={nextQuestionBTNhandler}
-            >
-              Attempt
-            </button>
-          ) : (
-            <button
-              className="submitBTN"
-              type="submit"
-              onClick={nextQuestionBTNhandler}
-            >
-              Try Again!
-            </button>
-          )}
+          <button
+            className="submitBTN"
+            type="submit"
+            onClick={nextQuestionBTNhandler}
+          >
+            {answerIsCorr ? "Attempt" : "Try Again"}
+          </button>
         </div>
       </form>
     </div>

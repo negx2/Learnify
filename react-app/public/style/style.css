@@ -196,7 +196,7 @@ li {
   padding: 5px;
 }
 
-span.corrAns {
+li.corrAns {
   color: rgb(35, 160, 35);
   padding: 3px;
   border-style: inset;
@@ -207,7 +207,7 @@ span.corrAns {
   border-width: thin medium thick;
 }
 
-span.wrongAns {
+li.wrongAns {
   color: rgb(194, 24, 24);
   padding: 3px;
   border-color: rgb(194, 24, 24);
@@ -226,7 +226,54 @@ button {
   cursor: pointer;
 }
 
-.EditBTNs {
+.EditAnsBTNs {
   display: flex;
   justify-content: center;
+}
+
+.choicesSection {
+  display: flex;
+  justify-content: left;
+}
+
+.saveBTN {
+  margin: 5px;
+  color: green;
+  cursor: pointer;
+}
+
+.undoBTN {
+  margin: 5px;
+  color: red;
+  cursor: pointer;
+}
+
+.questionSection {
+  display: flex;
+  justify-content: left;
+}
+
+.discardBTN{
+  margin-right: 5px;
+  margin-left: 5px;
+  border-radius: 10px;
+  padding: 5px 5px;
+  background-color: rgb(233, 232, 232);
+  cursor: pointer;
+  font-size: x-small;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  float: right;
+
+}
+.keepBTN{
+  margin-right: 5px;
+  margin-left: 5px;
+  border-radius: 10px;
+  padding: 5px 5px;
+  background-color: rgb(213, 248, 197);
+  cursor: pointer;
+  font-size: x-small;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
 }

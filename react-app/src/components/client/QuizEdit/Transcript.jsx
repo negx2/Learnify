@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AWS from "aws-sdk";
-import QuizPlayerEdit from "./QuizPlayerEdit.jsx";
+import QuizEditor from "./QuizEditor.jsx";
 import { questions } from "./../../HelperFuncs/sampleQnA.js";
 
 const lambda = new AWS.Lambda({
@@ -71,7 +71,7 @@ const Transcript = () => {
       <div className="outputSide">
         {quiz ? (
           // <QuizPlayer questions={quiz.questions} />
-          <QuizPlayerEdit questions={questions} />
+          <QuizEditor questions={questions} />
         ) : (
           <div>{fetchStatus}</div>
         )}
