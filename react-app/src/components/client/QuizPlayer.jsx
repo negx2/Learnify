@@ -33,6 +33,8 @@ const QuizPlayer = ({ questions }) => {
   const renderQuiz = () => {
     return (
       <QuestionDisp
+        qNumber={currentQuestion}
+        totalQuestions={questions.length}
         question={questions[currentQuestion]}
         handleAnswerOptionClick={handleAnswerOptionClick}
       />
