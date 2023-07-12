@@ -4,7 +4,12 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import EditableQuestion from "./EditableQuestion.jsx";
 import EditableAnswer from "./EditableAnswer.jsx";
 
-const QuestionEditor = ({ question }) => {
+const QuestionEditor = ({
+  question,
+  questionUpdateHandler,
+  answerUpdateHandler,
+  qID,
+}) => {
   const [creatorQ, setCreatorQ] = useState(question);
   const [qRemoved, setQremoved] = useState(false);
 
@@ -32,7 +37,11 @@ const QuestionEditor = ({ question }) => {
         </>
       ) : (
         <>
-          <EditableQuestion q={question.question_text} />
+          <EditableQuestion
+            q={question.question_text}
+            questionUpdateHandler={questionUpdateHandler}
+            qID={qID}
+          />
           <br></br>
           <ul>
             {creatorQ.choices.map((choice, index) => {
@@ -41,11 +50,17 @@ const QuestionEditor = ({ question }) => {
                   <EditableAnswer
                     ans={choice.choice_text}
                     ansTruth={choice.is_correct}
+                    answerUpdateHandler={answerUpdateHandler}
+                    qID={qID}
+                    choiceID={index}
                   />
                 </div>
               );
             })}
           </ul>
+          <button className="discardBTN" onClick={disableQ}>
+            Save Changes
+          </button>
           <button className="discardBTN" onClick={disableQ}>
             Discard Question
           </button>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import sanitizeHtml from "sanitize-html";
 import ContentEditable from "react-contenteditable";
 
-const EditableQuestion = ({ q }) => {
+const EditableQuestion = ({ q, questionUpdateHandler, qID }) => {
   const [content, setContent] = useState(q);
   const [editing, setEditing] = useState(false);
 
@@ -11,7 +11,12 @@ const EditableQuestion = ({ q }) => {
       allowedTags: ["b", "i", "a", "p"],
       allowedAttributes: { a: ["href"] },
     };
-
+    // need to send ID of Q along with chnages
+    questionUpdateHandler(
+      sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf),
+      qID
+    );
+    // is setting content below needed??
     setContent(sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf));
   }, []);
 
@@ -19,9 +24,6 @@ const EditableQuestion = ({ q }) => {
     e.preventDefault();
     setContent(q);
     setEditing(false);
-  };
-  const saveChanges = (e) => {
-    e.preventDefault();
   };
 
   return (
@@ -35,10 +37,6 @@ const EditableQuestion = ({ q }) => {
 
         {editing ? (
           <>
-            <span className="saveBTN" onClick={saveChanges}>
-              &#10003;
-            </span>
-
             <span className="undoBTN" onClick={undoChanges}>
               &#10005;
             </span>
