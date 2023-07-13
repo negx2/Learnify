@@ -6,6 +6,7 @@ import QuizPlayer from "./QuizPlayer.jsx";
 import FetchQuiz from "./FetchQuiz.jsx";
 import { useNavigate } from "react-router-dom";
 import FetchFeatured from "./FetchFeatured.jsx";
+import YoutubeTest from "./YoutubeTest.jsx";
 
 const App = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/tx" element={<Transcript />} />
         <Route path="/fetch" element={<FetchQuiz />} />
         <Route path="/featured" element={<FetchFeatured />} />
+        <Route path="/yt" element={<YoutubeTest />} />
       </Routes>
     </>
   );

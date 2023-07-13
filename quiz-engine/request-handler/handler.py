@@ -2,6 +2,7 @@ import logging
 from open_ai_generator import generate_quiz
 from errors import InputError
 import updater
+import youtube_transcript
 
 
 # create logger
@@ -22,6 +23,13 @@ def create_quiz_response(status_code, quiz):
     return {
         'statusCode': status_code,
         'body': {"quiz": quiz}
+    }
+
+
+def create_transcript_response(status_code, transcript):
+    return {
+        'statusCode': status_code,
+        'body': {"transcript": transcript}
     }
 
 
@@ -57,6 +65,19 @@ def lambda_handler(event, context):
             logger.error(e)
             error_message = "Error: 500 - Internal Server Error: Failed to update quiz: "
             return create_error_response(STATUS_INTERNAL_SERVER_ERROR, error_message)
+    elif 'fetchYoutubeCaption' in event:
+        try:
+            transcript = youtube_transcript.get_youtube_transcript(
+                event['fetchYoutubeCaption']['url'])
+            return create_transcript_response(STATUS_OK, transcript)
+        except InputError as e:
+            return create_error_response(STATUS_BAD_REQUEST, str(e))
+        except Exception as e:
+            logger.error(e)
+            error_message = "Error: 500 - Internal Server Error: Failed to fetch transcript from YouTube URL"
+            return (STATUS_INTERNAL_SERVER_ERROR, error_message)
+
     else:
+        logger.error(f"Invalid request parameters: \n")
         error_message = "Error: 400 - Bad Request: Invalid request parameters"
         return create_error_response(STATUS_BAD_REQUEST, error_message)
