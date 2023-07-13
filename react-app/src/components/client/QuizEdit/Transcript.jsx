@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AWS from "aws-sdk";
-import QuizPlayer from "./QuizPlayer.jsx";
+import QuizEditor from "./QuizEditor.jsx";
+import { questions } from "./../../HelperFuncs/sampleQnA.js";
 
 const lambda = new AWS.Lambda({
   region: "us-east-2",
@@ -33,21 +34,20 @@ const Transcript = () => {
 
       setFetchStatus("Fetching quiz...");
 
-      const response = await lambda.invoke(params).promise();
-      console.log("Response:", response);
-      const parsedResponse = JSON.parse(response.Payload.body);
-      console.log("Parsed response:", parsedResponse);
-      setQuiz(parsedResponse);
+      // const response = await lambda.invoke(params).promise();
+      // console.log("Response:", response);
+      // const parsedResponse = JSON.parse(response.Payload.body);
+      // console.log("Parsed response:", parsedResponse);
+      // setQuiz(parsedResponse);
+      setQuiz(questions);
     } catch (error) {
-      console.error("Error invoking Lambda function:", error);
+      // console.error("Error invoking Lambda function:", error);
       setFetchStatus("Error: " + error.message);
     }
   };
 
   return (
     <div className="mainClass">
-      {/* <input type="text" value={transcript} onChange={handleInputChange} /> */}
-
       <div className="inputSide">
         <textarea
           rows="10"
@@ -57,7 +57,7 @@ const Transcript = () => {
           // onChange={(e) => {
           //   setTranscript(e.target.value);
           // }}
-          placeholder="Script ..."
+          placeholder="Paste your content script here..."
         ></textarea>
 
         <div className="btnsDiv">
@@ -70,7 +70,8 @@ const Transcript = () => {
       <hr />
       <div className="outputSide">
         {quiz ? (
-          <QuizPlayer questions={quiz.questions} />
+          // <QuizPlayer questions={quiz.questions} />
+          <QuizEditor questions={questions} />
         ) : (
           <div>{fetchStatus}</div>
         )}

@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
+import FetchQuiz from "./FetchQuiz.jsx";
 
 const FetchFeatured = () => {
-  const [featured, setFeatured] = useState(null);
+  const [featured, setFeatured] = useState({
+    quizzes: [{ quiz_id: "0", quiz_title: "Test" }],
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [quizId, setQuizId] = useState("");
 
   const fetchFeatured = async () => {
     setLoading(true);
     setError(null);
-    setFeatured(null);
 
     try {
       const response = await fetch(
@@ -18,7 +21,7 @@ const FetchFeatured = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      setFeatured(JSON.stringify(data));
+      setFeatured(data);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -26,13 +29,40 @@ const FetchFeatured = () => {
     }
   };
 
+  useEffect(() => {
+    fetchFeatured();
+  }, []);
+
   return (
     <div>
-      <button onClick={fetchFeatured}>Fetch Featured Titles</button>
-
       {loading && <div>Loading...</div>}
       {error && <div>ERROR: {error}</div>}
-      {featured && <div> {featured} </div>}
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          overflow: "auto",
+          scroll: "smooth",
+        }}
+      >
+        {featured.quizzes.map((card) => (
+          <div
+            onClick={() => setQuizId(card.quiz_id)}
+            key={card.quiz_id}
+            style={{
+              width: "150px",
+              height: "150px",
+              border: "1px solid black",
+              margin: "10px",
+              padding: "3px",
+            }}
+          >
+            {card.quiz_title}
+          </div>
+        ))}
+      </div>
+      {quizId ? <FetchQuiz quizId={quizId} /> : null}
     </div>
   );
 };
