@@ -1,29 +1,76 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import $ from "jquery";
+import ProgressBar from "@ramonak/react-progress-bar";
 
-const QuestionDisp = ({ question, handleAnswerOptionClick }) => {
-  let tempAns = [];
-  let ansIsCorr;
-  const [selectedAnswers, setSelectedAnswers] = useState({});
+const QuestionDisp = ({
+  question,
+  handleAnswerOptionClick,
+  qNumber,
+  totalQuestions,
+}) => {
+  const [userAnswers, setUserAnswers] = useState([]);
+  const [answerIsCorr, setAnswerIsCorr] = useState(true);
 
-  function arraysEqual(a, b) {
+  const validateAnswers = (a, b) => {
     if (a === b) return true;
     if (a == null || b == null) return false;
     if (a.length !== b.length) return false;
-
-    // If you don't care about the order of the elements inside
-    // the array, you should sort both arrays here.
-    // Please note that calling sort on an array will modify that array.
-    // you might want to clone your array first.
-
+    a.sort();
+    b.sort();
     for (var i = 0; i < a.length; ++i) {
       if (a[i] !== b[i]) return false;
     }
     return true;
-  }
+  };
+
+  const nextQuestionBTNhandler = (e) => {
+    e.preventDefault();
+    const correctAns = [];
+    for (let answerChoice of question.choices) {
+      if (answerChoice.is_correct) correctAns.push(answerChoice.choice_text);
+    }
+
+    if (validateAnswers(correctAns, userAnswers)) {
+      handleAnswerOptionClick(true);
+      setAnswerIsCorr(true);
+      setUserAnswers([]);
+      $("input[type=checkbox]").prop("checked", false);
+    } else {
+      setAnswerIsCorr(false);
+      $(".shake").toggleClass("shake2");
+    }
+  };
+
+  const userAnswSelectionHandler = (e) => {
+    if (e.target.checked) {
+      if (!userAnswers.includes(e.target.value))
+        setUserAnswers([...userAnswers, e.target.value]);
+    } else {
+      let userAnswersModified = [...userAnswers];
+      let answerIndex = userAnswersModified.indexOf(e.target.value);
+      if (answerIndex > -1) {
+        userAnswersModified.splice(answerIndex, 1);
+        setUserAnswers(userAnswersModified);
+      }
+    }
+  };
 
   return (
     <div className="qna">
       <form action="">
+        {/* <p>
+          Questions: {qNumber + 1}/{totalQuestions}
+        </p> */}
+        <div>
+          <ProgressBar
+            completed={Math.round((qNumber / totalQuestions) * 100)}
+            bgColor={"rgb(53, 204, 53)"}
+            height="10px"
+            labelSize="10px"
+            width="50%"
+          />
+        </div>
+        <br></br>
         <p>{question.question_text}</p>
         <br></br>
         <div>
@@ -31,68 +78,25 @@ const QuestionDisp = ({ question, handleAnswerOptionClick }) => {
             <div key={index}>
               <input
                 type="checkbox"
-                onClick={(e) => {
-                  if (e.target.checked) {
-                    // add it to selected answers only if not in there already
-                    if (!tempAns.includes(e.target.value))
-                      // console.log("in arr", tempAns);
-                      tempAns.push(e.target.value);
-                  } else {
-                    // pop out
-                    let ansIndex = tempAns.indexOf(e.target.value);
-                    if (ansIndex > -1) tempAns.splice(ansIndex, 1);
-                  }
-                  console.log(
-                    "input:",
-                    e.target.value,
-                    e.target.checked,
-                    tempAns
-                  );
-                }}
                 id={choice.choice_text}
                 value={choice.choice_text}
+                onClick={userAnswSelectionHandler}
               />
-              <label>{choice.choice_text}</label>
+              <label htmlFor={choice.choice_text}>{choice.choice_text}</label>
             </div>
           ))}
         </div>
         <br></br>
-        <div>
+        <div className="BTNdiv shake">
           <button
             className="submitBTN"
             type="submit"
-            onClick={(e) => {
-              e.preventDefault();
-              // validate users asnwers
-              // console.log("onSub:", question.choices);
-              // console.log("input:", e.target.value, e.target.checked, tempAns);
-
-              // if is-corr is true, add text to arr
-              // compare arr to tempArr ... sorted, and length must be equal
-              let correctAns = [];
-              for (let ansChoice of question.choices) {
-                if (ansChoice.is_correct) {
-                  correctAns.push(ansChoice.choice_text);
-                }
-              }
-
-              correctAns.sort(); // CONFIRM how sort works for nums as well
-              tempAns.sort();
-
-              console.log("onSub:", correctAns, tempAns);
-              if (arraysEqual(correctAns, tempAns)) {
-                handleAnswerOptionClick(true);
-                ansIsCorr = true;
-              } else {
-                ansIsCorr = false;
-              }
-            }}
+            onClick={nextQuestionBTNhandler}
           >
-            Submit
+            {answerIsCorr ? "Attempt" : "Try Again"}
           </button>
         </div>
       </form>
-      {ansIsCorr === false ? <div>Try again</div> : null}
     </div>
   );
 };
