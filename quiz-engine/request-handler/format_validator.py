@@ -1,5 +1,6 @@
 import json
 from enum import Enum
+from errors import InputError
 
 
 class ErrorTypes(Enum):
@@ -46,46 +47,49 @@ def longest_json_substr(text):
     return max_subtext
 
 
-def validate_quiz_json(json_string):
+def validate_quiz_string(quiz_string):
     try:
-        quiz = json.loads(longest_json_substr(json_string))
+        quiz_json = json.loads(longest_json_substr(quiz_string))
+        return validate_quiz_json(quiz_json)
     except json.JSONDecodeError as e:
-        raise Exception(f"{ErrorTypes.INVALID_JSON_FORMAT.value}\n{e}")
+        raise InputError(f"{ErrorTypes.INVALID_JSON_FORMAT.value}\n{e}")
 
-    if "quiz_title" not in quiz or not isinstance(quiz['quiz_title'], str):
-        raise Exception(ErrorTypes.MISSING_QUIZ_TITLE.value)
 
-    if "questions" not in quiz or not isinstance(quiz['questions'], list):
-        raise Exception(ErrorTypes.MISSING_QUESTIONS.value)
+def validate_quiz_json(quiz_json):
+    if "quiz_title" not in quiz_json or not isinstance(quiz_json['quiz_title'], str):
+        raise InputError(ErrorTypes.MISSING_QUIZ_TITLE.value)
 
-    for i, question in enumerate(quiz["questions"], start=1):
+    if "questions" not in quiz_json or not isinstance(quiz_json['questions'], list):
+        raise InputError(ErrorTypes.MISSING_QUESTIONS.value)
+
+    for i, question in enumerate(quiz_json["questions"], start=1):
         if "question_number" not in question or not isinstance(question['question_number'], int):
-            raise Exception(ErrorTypes.MISSING_QUESTION_NUMBER.value)
+            raise InputError(ErrorTypes.MISSING_QUESTION_NUMBER.value)
 
         if question['question_number'] != i:
-            raise Exception(ErrorTypes.INVALID_QUESTION_NUMBER_SEQUENCE.value)
+            raise InputError(ErrorTypes.INVALID_QUESTION_NUMBER_SEQUENCE.value)
 
         if "question_text" not in question or not isinstance(question['question_text'], str):
-            raise Exception(ErrorTypes.MISSING_QUESTION_TEXT.value)
+            raise InputError(ErrorTypes.MISSING_QUESTION_TEXT.value)
 
         if "choices" not in question or not isinstance(question['choices'], list):
-            raise Exception(ErrorTypes.MISSING_CHOICES.value)
+            raise InputError(ErrorTypes.MISSING_CHOICES.value)
 
         if len(question['choices']) < 2:
-            raise Exception(ErrorTypes.INVALID_CHOICE_COUNT.value)
+            raise InputError(ErrorTypes.INVALID_CHOICE_COUNT.value)
 
         correct_choices = 0
         for choice in question["choices"]:
             if "choice_text" not in choice or not isinstance(choice['choice_text'], str):
-                raise Exception(ErrorTypes.MISSING_CHOICE_TEXT.value)
+                raise InputError(ErrorTypes.MISSING_CHOICE_TEXT.value)
 
             if "is_correct" not in choice or not isinstance(choice['is_correct'], bool):
-                raise Exception(ErrorTypes.MISSING_IS_CORRECT.value)
+                raise InputError(ErrorTypes.MISSING_IS_CORRECT.value)
 
             if choice["is_correct"]:
                 correct_choices += 1
 
         if correct_choices < 1:
-            raise Exception(ErrorTypes.INVALID_CORRECT_CHOICE_COUNT.value)
+            raise InputError(ErrorTypes.INVALID_CORRECT_CHOICE_COUNT.value)
 
-    return quiz
+    return quiz_json

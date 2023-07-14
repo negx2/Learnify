@@ -4,6 +4,7 @@ import TranscriptForCreators from "./QuizEdit/Transcript.jsx";
 import { useNavigate } from "react-router-dom";
 import FetchFeatured from "./FetchFeatured.jsx";
 import TakeQuiz from "./TakeQuiz.jsx";
+import YoutubeTest from "./YoutubeTest.jsx";
 
 const App = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/" element={<FetchFeatured />} />
         <Route path="/tx" element={<TranscriptForCreators />} />
         <Route path="/qz" element={<TakeQuiz />} />
+        <Route path="/yt" element={<YoutubeTest />} />
       </Routes>
     </>
   );

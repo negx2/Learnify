@@ -37,9 +37,11 @@ resource "aws_api_gateway_integration_response" "fetch_featured_integration_resp
   status_code = "200"
   depends_on  = [aws_api_gateway_integration.fetch_featured_integration]
 
+
   response_parameters = {
     "method.response.header.Access-Control-Allow-Origin" = "'*'"
   }
+
 
   response_templates = {
     "application/json" = <<EOF
@@ -64,7 +66,7 @@ resource "aws_api_gateway_method_response" "fetch_featured_method_response" {
   http_method = aws_api_gateway_method.fetch_featured_method.http_method
   status_code = "200"
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = false
+    "method.response.header.Access-Control-Allow-Origin" = true
   }
   response_models = {
     "application/json" = "Empty"

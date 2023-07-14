@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - export IMAGE_REPO_NAME=public.ecr.aws/o7c7i3x2/learnify-ecr-repo/ft5-large-qas-50
+      - export AWS_ACCOUNT_ID=706535466215
+
+  build:
+    commands:
+      - echo Building the Docker image...
+      - docker build -t $IMAGE_REPO_NAME -f lm-models/Dockerfile .
+
+  post_build:
+    commands:
+      - echo Pushing the Docker image to ECR...
+      - docker push $IMAGE_REPO_NAME

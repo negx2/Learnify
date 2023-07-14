@@ -1,11 +1,11 @@
 import unittest
 import json
-from format_validator import validate_quiz_json, ErrorTypes
+from format_validator import validate_quiz_string, ErrorTypes
 
 
 class TestQuizValidator(unittest.TestCase):
     def setUp(self):
-        self.quiz_validator = validate_quiz_json
+        self.quiz_validator = validate_quiz_string
         self.correct_json_data = '''
         {
             "quiz_title": "Test Quiz",
