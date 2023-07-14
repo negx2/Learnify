@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Transcript from "./QuizEdit/Transcript.jsx";
 import { useNavigate } from "react-router-dom";
 import FetchFeatured from "./FetchFeatured.jsx";
+import YoutubeTest from "./YoutubeTest.jsx";
 
 const App = () => {
   const navigate = useNavigate();
@@ -21,6 +22,9 @@ const App = () => {
       <Routes>
         <Route path="/" element={<FetchFeatured />} />
         <Route path="/tx" element={<Transcript />} />
+        <Route path="/fetch" element={<FetchQuiz />} />
+        <Route path="/featured" element={<FetchFeatured />} />
+        <Route path="/yt" element={<YoutubeTest />} />
       </Routes>
     </>
   );
