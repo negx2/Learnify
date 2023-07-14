@@ -9,7 +9,7 @@ const lambda = new AWS.Lambda({
   secretAccessKey: "iIJCuVESeZA2K1KP6JJpzkPr7hFOURcACU3Kdwym",
 });
 
-const Transcript = () => {
+const TranscriptForCreators = () => {
   const [transcript, setTranscript] = useState("");
   const [quiz, setQuiz] = useState("");
   const [fetchStatus, setFetchStatus] = useState("No quizzes to show!");
@@ -85,4 +85,4 @@ const Transcript = () => {
   );
 };
 
-export default Transcript;
+export default TranscriptForCreators;

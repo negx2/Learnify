@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import $ from "jquery";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave, faTrash, faUndo } from "@fortawesome/free-solid-svg-icons";
 import ProgressBar from "@ramonak/react-progress-bar";
 import EditableQuestion from "./EditableQuestion.jsx";
 import EditableAnswer from "./EditableAnswer.jsx";
@@ -9,6 +11,8 @@ const QuestionEditor = ({
   questionUpdateHandler,
   answerUpdateHandler,
   qID,
+  saveChanges,
+  restoreQnA,
 }) => {
   const [creatorQ, setCreatorQ] = useState(question);
   const [qRemoved, setQremoved] = useState(false);
@@ -31,7 +35,7 @@ const QuestionEditor = ({
           <div>
             Question removed!{" "}
             <button className="keepBTN" onClick={keepQ}>
-              Undo Discard
+              Restore <FontAwesomeIcon icon={faUndo} />
             </button>
           </div>
         </>
@@ -58,11 +62,14 @@ const QuestionEditor = ({
               );
             })}
           </ul>
-          <button className="discardBTN" onClick={disableQ}>
-            Save Changes
+          <button className="saveBTN" onClick={() => saveChanges(qID)}>
+            <FontAwesomeIcon icon={faSave} />
+          </button>
+          <button className="restoreBTN" onClick={() => restoreQnA(qID)}>
+            <FontAwesomeIcon icon={faUndo} />
           </button>
           <button className="discardBTN" onClick={disableQ}>
-            Discard Question
+            <FontAwesomeIcon icon={faTrash} />
           </button>
         </>
       )}

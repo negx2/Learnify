@@ -9,7 +9,7 @@ const lambda = new AWS.Lambda({
   secretAccessKey: "iIJCuVESeZA2K1KP6JJpzkPr7hFOURcACU3Kdwym",
 });
 
-const Transcript = () => {
+const TranscriptForUsers = () => {
   const [transcript, setTranscript] = useState("");
   const [quiz, setQuiz] = useState("");
   const [fetchStatus, setFetchStatus] = useState("No quizzes to show!");
@@ -67,10 +67,6 @@ const Transcript = () => {
           cols="30"
           onChange={handleInputChange}
           value={transcript}
-          // CONSIDER below onChnage func.... as it needs an event
-          // onChange={(e) => {
-          //   setTranscript(e.target.value);
-          // }}
           placeholder="Script..."
         ></textarea>
 
@@ -83,15 +79,10 @@ const Transcript = () => {
 
       <hr />
       <div className="outputSide">
-        {quiz ? (
-          // <QuizPlayer questions={quiz.questions} />
-          <QuizPlayer questions={questions} />
-        ) : (
-          <div>{fetchStatus}</div>
-        )}
+        {quiz ? <QuizPlayer questions={questions} /> : <div>{fetchStatus}</div>}
       </div>
     </div>
   );
 };
 
-export default Transcript;
+export default TranscriptForUsers;

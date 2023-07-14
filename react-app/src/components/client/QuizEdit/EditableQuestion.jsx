@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import sanitizeHtml from "sanitize-html";
 import ContentEditable from "react-contenteditable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave, faTrash, faUndo } from "@fortawesome/free-solid-svg-icons";
 
 const EditableQuestion = ({ q, questionUpdateHandler, qID }) => {
   const [content, setContent] = useState(q);
@@ -17,7 +19,7 @@ const EditableQuestion = ({ q, questionUpdateHandler, qID }) => {
       qID
     );
     // is setting content below needed??
-    setContent(sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf));
+    // setContent(sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf));
   }, []);
 
   const undoChanges = (e) => {
@@ -37,8 +39,13 @@ const EditableQuestion = ({ q, questionUpdateHandler, qID }) => {
 
         {editing ? (
           <>
-            <span className="undoBTN" onClick={undoChanges}>
-              &#10005;
+            {/* <button className="restoreBTN" onClick={() => restoreQnA(qID)}>
+            <FontAwesomeIcon icon={faUndo} />
+          </button> */}
+
+            <span className="restoreBTN" onClick={undoChanges}>
+              {/* &#10005; */}
+              <FontAwesomeIcon icon={faUndo} />
             </span>
           </>
         ) : null}

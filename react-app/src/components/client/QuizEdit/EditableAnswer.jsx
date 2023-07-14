@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import sanitizeHtml from "sanitize-html";
 import ContentEditable from "react-contenteditable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave, faTrash, faUndo } from "@fortawesome/free-solid-svg-icons";
 
 const EditableAnswer = ({
   ans,
@@ -28,7 +30,7 @@ const EditableAnswer = ({
       qID,
       choiceID
     );
-    setContent(sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf));
+    // setContent(sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf));
   }, []);
 
   const undoChanges = (e) => {
@@ -61,8 +63,12 @@ const EditableAnswer = ({
 
       {editing ? (
         <div className="EditAnsBTNs">
-          <span className="undoBTN" onClick={undoChanges}>
+          {/* <span className="undoBTN" onClick={undoChanges}>
             &#10005;
+          </span> */}
+          <span className="restoreBTN" onClick={undoChanges}>
+            {/* &#10005; */}
+            <FontAwesomeIcon icon={faUndo} />
           </span>
         </div>
       ) : null}
