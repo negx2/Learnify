@@ -1,14 +1,12 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const fetchYoutubeCaption = async (link, setDisplayValue) => {
-  const response = await fetch(
+  const response = await axios.get(
     `https://xhw9ijramc.execute-api.us-east-2.amazonaws.com/prod/fetch-youtube-caption?url=${link}`
   );
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  const data = await response.json();
-  return data.transcript;
+
+  return response.data.transcript;
 };
 
 const YoutubeTest = () => {

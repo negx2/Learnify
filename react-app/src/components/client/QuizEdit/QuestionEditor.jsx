@@ -8,13 +8,12 @@ import EditableAnswer from "./EditableAnswer.jsx";
 
 const QuestionEditor = ({
   question,
-  questionUpdateHandler,
-  answerUpdateHandler,
   qID,
-  saveChanges,
+  updateQuestion,
+  updateChoices,
   restoreQnA,
 }) => {
-  const [creatorQ, setCreatorQ] = useState(question);
+  // const [creatorQ, setCreatorQ] = useState(question);
   const [qRemoved, setQremoved] = useState(false);
 
   const disableQ = (e) => {
@@ -43,18 +42,19 @@ const QuestionEditor = ({
         <>
           <EditableQuestion
             q={question.question_text}
-            questionUpdateHandler={questionUpdateHandler}
+            updateQuestion={updateQuestion}
             qID={qID}
           />
           <br></br>
           <ul>
-            {creatorQ.choices.map((choice, index) => {
+            {question.choices.map((choice, index) => {
+              // console.log("rerendering??", choice);
               return (
                 <div key={index}>
                   <EditableAnswer
                     ans={choice.choice_text}
                     ansTruth={choice.is_correct}
-                    answerUpdateHandler={answerUpdateHandler}
+                    updateChoices={updateChoices}
                     qID={qID}
                     choiceID={index}
                   />
@@ -62,10 +62,10 @@ const QuestionEditor = ({
               );
             })}
           </ul>
-          <button className="saveBTN" onClick={() => saveChanges(qID)}>
+          <button className="saveBTN" onClick={() => keepQ()}>
             <FontAwesomeIcon icon={faSave} />
           </button>
-          <button className="restoreBTN" onClick={() => restoreQnA(qID)}>
+          <button className="restoreBTN" onClick={restoreQnA}>
             <FontAwesomeIcon icon={faUndo} />
           </button>
           <button className="discardBTN" onClick={disableQ}>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AWS from "aws-sdk";
 import QuizEditor from "./QuizEditor.jsx";
 import { questions } from "./../../HelperFuncs/sampleQnA.js";
+import axios from "axios";
 
 const lambda = new AWS.Lambda({
   region: "us-east-2",
@@ -10,54 +11,81 @@ const lambda = new AWS.Lambda({
 });
 
 const TranscriptForCreators = () => {
+  // const [quizQuestions, setQuizQuestions] = useState(questions);
+  const [youtubeLinkInput, setYoutubeLinkInput] = useState("");
   const [transcript, setTranscript] = useState("");
   const [quiz, setQuiz] = useState("");
+  const [quizBackup, setQuizBackup] = useState("");
   const [fetchStatus, setFetchStatus] = useState("No quizzes to show!");
+
+  const fetchYoutubeCaption = async (link, setDisplayValue) => {
+    const response = await axios.get(
+      `https://xhw9ijramc.execute-api.us-east-2.amazonaws.com/prod/fetch-youtube-caption?url=${link}`
+    );
+    return response.data.transcript;
+  };
 
   const handleInputChange = (event) => {
     setTranscript(event.target.value);
   };
 
+  const handleLinkChange = (e) => {
+    setYoutubeLinkInput(e.target.value);
+  };
+
   const generateQuiz = async () => {
     try {
-      // clear quiz
       setQuiz("");
 
-      const payload = {
-        queryStringParameters: { transcript: transcript },
-      };
-
-      const params = {
-        FunctionName: "quiz-engine-lf",
-        Payload: JSON.stringify(payload),
-      };
-
       setFetchStatus("Fetching quiz...");
-
-      // const response = await lambda.invoke(params).promise();
-      // console.log("Response:", response);
-      // const parsedResponse = JSON.parse(response.Payload.body);
-      // console.log("Parsed response:", parsedResponse);
-      // setQuiz(parsedResponse);
-      setQuiz(questions);
+      // const response = await axios.get(
+      //   `https://xhw9ijramc.execute-api.us-east-2.amazonaws.com/prod/make-quiz?transcript=${transcript}`
+      // );
+      // setQuiz(response.data.quiz.questions);
+      // setQuizBackup(response.data.quiz.questions);
+      setQuiz(questions); // should be quiz object that has id and title
+      setQuizBackup(JSON.parse(JSON.stringify(questions)));
     } catch (error) {
-      // console.error("Error invoking Lambda function:", error);
       setFetchStatus("Error: " + error.message);
     }
   };
 
-  const retreiveScript = () => {
-    // call lambda fn to get script
-    let testScript = "hey hey";
-    // update transcript to display incoming script in textarea automatically
-    setTranscript(testScript);
+  const retreiveScript = async () => {
+    setTranscript("Fetching Editable Transcript ...");
+    const incomingTranscript = await fetchYoutubeCaption(
+      youtubeLinkInput,
+      setTranscript
+    );
+    setTranscript(incomingTranscript);
+  };
+
+  const updateQuestion = (qID, updatedQ) => {
+    questions[qID].question_text = updatedQ;
+    // setQuiz(questions); // then... save into db
+  };
+
+  const updateChoices = (qID, choiceID, updatedAns, contentTruth) => {
+    console.log("ANS", updatedAns);
+    questions[qID].choices[choiceID].choice_text = updatedAns;
+    questions[qID].choices[choiceID].is_correct = contentTruth;
+    // setQuiz(questions); // then... save into db
+  };
+
+  const restoreQnA = (ID) => {
+    console.log("Q", quizBackup);
+    setQuiz(JSON.parse(JSON.stringify(quizBackup)));
   };
 
   return (
     <div className="mainClass">
       <div className="inputSide">
         <div>
-          <input type="link" placeholder="Video link here..."></input>
+          <input
+            type="link"
+            value={youtubeLinkInput}
+            onChange={handleLinkChange}
+            placeholder="Video link here..."
+          ></input>
           <button onClick={retreiveScript}>Get Script</button>
           <br></br>
           <br></br>
@@ -76,10 +104,18 @@ const TranscriptForCreators = () => {
           </button>
         </div>
       </div>
-
       <hr />
       <div className="outputSide">
-        {quiz ? <QuizEditor questions={questions} /> : <div>{fetchStatus}</div>}
+        {quiz ? (
+          <QuizEditor
+            questions={quiz}
+            updateQuestion={updateQuestion}
+            updateChoices={updateChoices}
+            restoreQnA={restoreQnA}
+          />
+        ) : (
+          <div>{fetchStatus}</div>
+        )}
       </div>
     </div>
   );

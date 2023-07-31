@@ -4,7 +4,7 @@ import ContentEditable from "react-contenteditable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faTrash, faUndo } from "@fortawesome/free-solid-svg-icons";
 
-const EditableQuestion = ({ q, questionUpdateHandler, qID }) => {
+const EditableQuestion = ({ q, updateQuestion, qID }) => {
   const [content, setContent] = useState(q);
   const [editing, setEditing] = useState(false);
 
@@ -13,13 +13,10 @@ const EditableQuestion = ({ q, questionUpdateHandler, qID }) => {
       allowedTags: ["b", "i", "a", "p"],
       allowedAttributes: { a: ["href"] },
     };
-    // need to send ID of Q along with chnages
-    questionUpdateHandler(
-      sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf),
-      qID
+    updateQuestion(
+      qID,
+      sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf)
     );
-    // is setting content below needed??
-    // setContent(sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf));
   }, []);
 
   const undoChanges = (e) => {
@@ -39,12 +36,7 @@ const EditableQuestion = ({ q, questionUpdateHandler, qID }) => {
 
         {editing ? (
           <>
-            {/* <button className="restoreBTN" onClick={() => restoreQnA(qID)}>
-            <FontAwesomeIcon icon={faUndo} />
-          </button> */}
-
             <span className="restoreBTN" onClick={undoChanges}>
-              {/* &#10005; */}
               <FontAwesomeIcon icon={faUndo} />
             </span>
           </>

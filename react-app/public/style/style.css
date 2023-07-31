@@ -227,6 +227,8 @@ button {
 }
 
 .EditAnsBTNs {
+  font-size:x-small;
+  padding-left: 2px;
   display: flex;
   justify-content: center;
 }

@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import sanitizeHtml from "sanitize-html";
 import ContentEditable from "react-contenteditable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faTrash, faUndo } from "@fortawesome/free-solid-svg-icons";
 
-const EditableAnswer = ({
-  ans,
-  ansTruth,
-  answerUpdateHandler,
-  qID,
-  choiceID,
-}) => {
-  const [content, setContent] = useState(ans);
+const EditableAnswer = ({ ans, ansTruth, updateChoices, qID, choiceID }) => {
+  // let content = useRef(ans);
+
+  // const [content, setContent] = useState(ans);
+
   const [contentTruth, setContentTruth] = useState(ansTruth);
   const [editing, setEditing] = useState(false);
 
@@ -20,54 +17,57 @@ const EditableAnswer = ({
       allowedTags: ["b", "i", "a", "p"],
       allowedAttributes: { a: ["href"] },
     };
-
-    // inorder to lift content up to parent
-    // esentially setConent cna be a fn from parent
-    // FN below also needs to lift bool val and ID of choice (and its question ID too??)
-    answerUpdateHandler(
-      sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf),
-      contentTruth,
+    // setContent();
+    updateChoices(
       qID,
-      choiceID
+      choiceID,
+      sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf),
+      ansTruth
     );
-    // setContent(sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf));
+    // setNewContent(newcont);
   }, []);
 
   const undoChanges = (e) => {
     // e.stopPropagation();
-    e.preventDefault();
-    setContent(ans);
-    setContentTruth(ansTruth);
-    setEditing(false);
+    // e.preventDefault();
+    // setContent(ans);
+    // setContentTruth(ansTruth);
+    // setEditing(false);
   };
 
   const updateAnswer = () => {
     if (contentTruth) {
+      // ansTruth = false;
+      // setContent(x);
       setContentTruth(false);
-      answerUpdateHandler(content, false, qID, choiceID);
+      // answerUpdateHandler(content, true, qID, choiceID);
     } else {
+      // content = content.current;
+      // setContent(x);
+      // ansTruth = true;
+      // setContent(content);
       setContentTruth(true);
-      answerUpdateHandler(content, true, qID, choiceID);
+      // answerUpdateHandler(content, false, qID, choiceID);
     }
+    // content = content.current;
   };
 
+  // console.log("ANS", ans);
+  // console.log("cont", content.current);
   return (
     <div className="choicesSection">
       <li
         className={contentTruth ? "corrAns" : "wrongAns"}
-        onClick={updateAnswer}
-        onFocus={() => setEditing(true)}
+        // onClick={updateAnswer}
+        // onFocus={() => setEditing(true)}
+        // onBlur={() => setEditing(false)}
       >
-        <ContentEditable onChange={onContentChange} html={content} />
+        <ContentEditable onChange={onContentChange} html={ans} />
       </li>
 
       {editing ? (
         <div className="EditAnsBTNs">
-          {/* <span className="undoBTN" onClick={undoChanges}>
-            &#10005;
-          </span> */}
           <span className="restoreBTN" onClick={undoChanges}>
-            {/* &#10005; */}
             <FontAwesomeIcon icon={faUndo} />
           </span>
         </div>
