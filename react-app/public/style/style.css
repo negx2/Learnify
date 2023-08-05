@@ -227,6 +227,8 @@ button {
 }
 
 .EditAnsBTNs {
+  font-size:x-small;
+  padding-left: 2px;
   display: flex;
   justify-content: center;
 }
@@ -237,14 +239,27 @@ button {
 }
 
 .saveBTN {
-  margin: 5px;
+  border-style: none;
+  color: green;
+  cursor: pointer;
+}
+
+.restoreBTN {
+  border-style: none;
   color: green;
   cursor: pointer;
 }
 
 .undoBTN {
-  margin: 5px;
+  border-style: none;
   color: red;
+  cursor: pointer;
+}
+
+.discardBTN{
+  border-style: none;
+  background-color: rgb(217, 224, 217);
+  color:red;
   cursor: pointer;
 }
 
@@ -253,7 +268,7 @@ button {
   justify-content: left;
 }
 
-.discardBTN{
+/* .discardBTN{
   margin-right: 5px;
   margin-left: 5px;
   border-radius: 10px;
@@ -265,7 +280,7 @@ button {
   font-weight: bold;
   float: right;
 
-}
+} */
 .keepBTN{
   margin-right: 5px;
   margin-left: 5px;

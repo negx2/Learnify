@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import sanitizeHtml from "sanitize-html";
 import ContentEditable from "react-contenteditable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave, faTrash, faUndo } from "@fortawesome/free-solid-svg-icons";
 
-const EditableQuestion = ({ q }) => {
+const EditableQuestion = ({ q, updateQuestion, qID }) => {
   const [content, setContent] = useState(q);
   const [editing, setEditing] = useState(false);
 
@@ -11,17 +13,16 @@ const EditableQuestion = ({ q }) => {
       allowedTags: ["b", "i", "a", "p"],
       allowedAttributes: { a: ["href"] },
     };
-
-    setContent(sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf));
+    updateQuestion(
+      qID,
+      sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf)
+    );
   }, []);
 
   const undoChanges = (e) => {
     e.preventDefault();
     setContent(q);
     setEditing(false);
-  };
-  const saveChanges = (e) => {
-    e.preventDefault();
   };
 
   return (
@@ -35,12 +36,8 @@ const EditableQuestion = ({ q }) => {
 
         {editing ? (
           <>
-            <span className="saveBTN" onClick={saveChanges}>
-              &#10003;
-            </span>
-
-            <span className="undoBTN" onClick={undoChanges}>
-              &#10005;
+            <span className="restoreBTN" onClick={undoChanges}>
+              <FontAwesomeIcon icon={faUndo} />
             </span>
           </>
         ) : null}

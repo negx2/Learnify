@@ -23,15 +23,16 @@ const FetchFeatured = () => {
       const data = await response.json();
       setFeatured(data);
     } catch (error) {
+      console.log("ERR is", error);
       setError(error.message);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchFeatured();
-  }, []);
+  // useEffect(() => {
+  //   fetchFeatured();
+  // }, []);
 
   return (
     <div>
